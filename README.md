@@ -4,7 +4,7 @@ A proof-of-concept object detection system for identifying handguns, rifles, and
 
 ## Overview
 
-This project demonstrates whether modern object detection models can reliably identify weapons using publicly available data, as a foundation for a larger security or situational-awareness detection system.
+This project demonstrates whether modern object detection models can reliably identify weapons using publicly available data, as a foundation for a larger security/situational-awareness detection system.
 
 ## Repository Structure
 
@@ -34,17 +34,17 @@ weapon-detection/
 ## Quick Summary
 
 - **Classes:** Guns, Rifle, knife
-- **Dataset:** 150 images merged from 4 public sources (Roboflow Universe), balanced across classes with a manual priority pass favoring more realistic and diverse imagery
+- **Dataset:** ~149 images merged from 4 public sources (Roboflow Universe), balanced across classes with a manual priority pass favoring more realistic/diverse imagery
 - **Model:** YOLOv8n (Ultralytics), trained on Google Colab (T4 GPU)
 - **Final performance:** mAP50 = 0.532, mAP50-95 = 0.276 (see [technical report](report/technical_report.md) for full breakdown and iteration history)
 
 ## Model Weights
 
-Trained weights (`best.pt`) are available via Google Drive: **[https://drive.google.com/file/d/1qTngO4mmpBLooF3GvzKqHO08ne7ZBVs9/view?usp=share_link]**
+Trained weights are included directly in this repository: [`weight/best_weapon_model.pt`](weight/best_weapon_model.pt)
 
 ## Dataset
 
-Annotated, merged dataset (zipped, YOLOv8 format) is available via Google Drive: **[insert your Drive link here]**
+The annotated, merged, balanced dataset (YOLOv8 format) is included directly in this repository: [`data/merged_dataset_backup/`](data/merged_dataset_backup/)
 
 ## Full Report
 
