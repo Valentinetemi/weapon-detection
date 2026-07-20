@@ -1,0 +1,6 @@
+train: /content/merged_dataset/train/images
+val: /content/merged_dataset/valid/images
+test: /content/merged_dataset/test/images
+
+nc: 3
+names: ['Guns', 'Rifle', 'knife']
