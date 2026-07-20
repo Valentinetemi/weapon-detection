@@ -1,7 +1,7 @@
 # Technical Report: Weapon Detection Proof of Concept
 
 **Author:** Temiloluwa Valentine Olajuwon
-**Date:** July 2026
+**Date:** 20th July 2026
 
 ## 1. Objective
 
@@ -48,7 +48,7 @@ Initial balancing targeted ~50 images per class. After an initial training run r
 - **Train / Valid / Test split:** 70% / 20% / 10%
   - Train: 125 images
   - Valid: 36 images
-  - Test: ~16-19 images
+  - Test: 19 images
 
 A 70/20/10 split was chosen over the source datasets' default splits (which were often heavily train-skewed, e.g. 96/0/4) to ensure a meaningful validation set for monitoring training, given the small overall dataset size.
 
@@ -80,7 +80,7 @@ Rifle was clearly the weakest-performing class, both in detection rate (recall) 
 
 ### 4.2 Iteration 2 (After Rebalancing)
 
-Diagnosis: Rifle had the least diverse source data (limited to one dataset, predominantly military/tactical imagery). The per-class sampling target for Rifle was increased, pulling in more volume from the existing source, and the full pipeline (merge → balance → split → train) was re-run.
+Diagnosis: Rifle had the least diverse source data (limited to one dataset, predominantly military imagery). The per-class sampling target for Rifle was increased, pulling in more volume from the existing source, and the full pipeline (merge → balance → split → train) was re-run.
 
 | Class | Precision | Recall | mAP50 | mAP50-95 |
 |---|---|---|---|---|
@@ -99,11 +99,11 @@ Diagnosis: Rifle had the least diverse source data (limited to one dataset, pred
 
 The confusion matrix from the final model reveals:
 
-- **Guns:** 4 correct detections, 1 missed (classified as background). Clean performance overall.
+- **Guns:** 4 correct detections, 1 missed (classified as background).
 - **Rifle:** 12 correct detections, but 10 missed entirely (false negatives) and 21 false positives (background misclassified as Rifle). This is by far the largest source of error in the model.
 - **knife:** 4 correct detections, with a smaller number of false positives from background.
 
-Rifle is clearly the model's weakest point — both under-detecting real rifles and over-predicting rifles where none exist. This is consistent with Rifle having the narrowest diversity of source imagery (predominantly outdoor/military/tactical contexts only).
+Rifle is clearly the model's weakest point, both under-detecting real rifles and over-predicting rifles where none exist. This is consistent with Rifle having the narrowest diversity of source imagery (predominantly outdoor/military/tactical contexts only).
 
 ## 5. Sample Detection Results
 
@@ -119,7 +119,7 @@ Rifle is clearly the model's weakest point — both under-detecting real rifles 
 - **Class imbalance in source data:** Public datasets varied significantly in size and class coverage; some (e.g. the original Rifle source) offered narrow contextual diversity (mostly military/tactical scenes), directly limiting real-world generalization for that class.
 - **Inconsistent class taxonomies across sources:** Source datasets used different class names, orders, and scopes (e.g. one dataset combined "gun" and "human" in a single schema), requiring careful remapping to avoid silent labeling errors.
 - **Small validation set:** At this dataset scale, validation metrics can be somewhat noisy epoch-to-epoch; results should be interpreted as directional rather than highly precise.
-- **Realistic vs. clean imagery tradeoff:** Many public datasets favor clean, staged, or studio-style images, which do not fully represent the visual conditions (low light, occlusion, distance, motion blur) relevant to a real security/CCTV use case.
+- **Realistic vs. clean imagery tradeoff:** Many public datasets favor clean, staged, or studio-style images, which do not fully represent the visual conditions (low light, occlusion, distance, motion blur) relevant to a real security or CCTV use case.
 
 ## 7. Recommendations for Scaling to Production
 
@@ -128,7 +128,7 @@ Rifle is clearly the model's weakest point — both under-detecting real rifles 
 3. **Expand class granularity.** Current scope (Guns, Rifle, knife) could be extended in future iterations to include additional weapon subtypes (e.g. distinguishing handgun types, adding blunt weapons or explosives) as more labeled data becomes available.
 4. **Incorporate real CCTV/security footage.** Since the target deployment context is public security systems, training data should include more low-light, distant, and low-resolution imagery representative of actual security camera feeds, rather than relying primarily on clean or staged photography.
 5. **Increase validation/test set size** as more data becomes available, to produce more statistically reliable performance estimates.
-6. **Consider a larger model variant** (YOLOv8s/m) once dataset size justifies it — the current YOLOv8n was chosen for speed given the small-data regime, but a larger model may better exploit a bigger dataset.
+6. **Consider a larger model variant** (YOLOv8s/m) once dataset size justifies it, the current YOLOv8n was chosen for speed given the small-data regime, but a larger model may better exploit a bigger dataset.
 7. **Establish an iterative data-collection loop**, similar to the process used here: deploy, monitor per-class failure patterns via a confusion matrix, and target new data collection at the weakest-performing classes.
 
 ## 8. Conclusion
