@@ -9,16 +9,26 @@ This project demonstrates whether modern object detection models can reliably id
 ## Repository Structure
 
 ```
-weapon-detection-poc/
-├── README.md                    # this file
-├── notebook.ipynb                # full Colab notebook (data merge, training, evaluation)
+weapon-detection/
+├── README.md                     # this file
+├── Weapon_model.ipynb            # full Colab notebook (data merge, training, evaluation)
+├── data/
+│   └── merged_dataset_backup/    # annotated, balanced dataset (YOLOv8 format)
+│       ├── train/
+│       │   ├── images/
+│       │   └── labels/
+│       ├── valid/
+│       │   ├── images/
+│       │   └── labels/
+│       ├── test/
+│       │   ├── images/
+│       │   └── labels/
+│       └── data.yaml             # class names + dataset config
 ├── report/
 │   ├── technical_report.md       # full technical report
 │   └── images/                   # confusion matrix, sample detections, training curves
-├── data/
-│   └── dataset_info.md           # dataset sources + Drive link to annotated dataset zip
-└── weights/
-    └── model_info.md             # Drive link to trained model weights (best.pt)
+└── weight/
+    └── best_weapon_model.pt      # final trained YOLOv8 model weights
 ```
 
 ## Quick Summary
