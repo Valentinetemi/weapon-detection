@@ -99,13 +99,15 @@ Interestingly, Guns improved by the largest margin of any class (mAP50 up by 0.2
 
 ### 4.3 What the confusion matrix shows
 
-Looking at the confusion matrix from the final model tells a more detailed story than the summary metrics alone:
+Looking at the confusion matrix gives a clearer picture of how the model is making mistakes, not just how accurate it is overall.
 
-- **Guns:** 4 correct detections, only 1 missed. Clean, consistent performance.
-- **Rifle:** 12 correct detections, but 10 rifles were missed entirely (predicted as empty background), and on top of that, the model produced 21 false positives, cases where it predicted "Rifle" on parts of an image that had nothing there at all.
-- **knife:** 4 correct detections, with only a small number of false positives.
+Guns: The model correctly detected 4 guns, and only 1 gun was missed. This suggests it has learned this class reasonably well.
 
-That 21 number for Rifle really stands out it's by far the largest single error anywhere in the matrix. It tells me the model hasn't learned a confident, well-defined sense of what a rifle looks like; it's both missing real ones and hallucinating ones that aren't there. That's a pretty clear signal that Rifle needs the most attention going forward, more so than either of the other two classes.
+Rifle: The model correctly detected 12 rifles, but it missed 21 actual rifles, predicting them as background instead. In other words, the model often failed to recognize that a rifle was present at all. It also mistakenly predicted 10 background images as rifles, meaning it sometimes saw rifles where there weren't any.
+
+Knife: The model correctly detected 4 knives and made only a few mistakes, giving it fairly consistent performance.
+
+The biggest issue is clearly the Rifle class. The model misses many real rifles while also occasionally predicting rifles in background images. The larger problem, however, is the number of missed rifles. This matches what I saw in the sample detections, where the model completely failed to detect an obvious rifle in a well-lit image. Together, these results suggest that the Rifle class needs more diverse training data and further improvement before the model could be considered reliable.
 
 ## 5. Sample Detection Results
 
